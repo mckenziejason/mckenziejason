@@ -1,0 +1,34 @@
+# detections.nonroot.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: detections.example.com
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: detections
+  template:
+    metadata:
+      labels:
+        run: detections
+    spec:
+      # ─── Pod-level security ────────────────────────────────────────────────
+      securityContext:
+        runAsNonRoot: true        # require a non-root UID
+        runAsUser: 10000          # pick any unused UID your image supports
+        runAsGroup: 10000         # same GID (optional but common)
+        fsGroup: 10000            # files written to volumes get this GID
+      # ───────────────────────────────────────────────────────────────────────
+      containers:
+        - name: detection-container
+          image: quay.io/crowdstrike/detection-container:main
+          imagePullPolicy: Always
+          command:
+            - "/entrypoint.sh"
+          # ── Container-level hardening (overrides or augments pod defaults) ─
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ "ALL" ]     # remove all Linux capabilities
+          # ───────────────────────────────────────────────────────────────────
