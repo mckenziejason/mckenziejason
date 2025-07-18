@@ -16,6 +16,8 @@ spec:
     spec:
       # ─── Pod-level security ────────────────────────────────────────────────
       securityContext:
+        seccompProfile:
+          type: RuntimeDefault
         runAsNonRoot: true        # require a non-root UID
         runAsUser: 10000          # pick any unused UID your image supports
         runAsGroup: 10000         # same GID (optional but common)
