@@ -19,8 +19,8 @@ spec:
         seccompProfile:
           type: RuntimeDefault
         runAsNonRoot: true        # require a non-root UID
-        runAsUser: 10000          # pick any unused UID your image supports
-        runAsGroup: 10000         # same GID (optional but common)
+        runAsUser: 0          # pick any unused UID your image supports
+        runAsGroup: 0         # same GID (optional but common)
         fsGroup: 10000            # files written to volumes get this GID
       # ───────────────────────────────────────────────────────────────────────
       containers:
