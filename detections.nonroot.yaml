@@ -18,7 +18,7 @@ spec:
       securityContext:
         seccompProfile:
           type: RuntimeDefault
-        runAsNonRoot: true        # require a non-root UID
+        runAsNonRoot: False        # require a non-root UID
         runAsUser: 0          # pick any unused UID your image supports
         runAsGroup: 0         # same GID (optional but common)
         fsGroup: 10000            # files written to volumes get this GID
